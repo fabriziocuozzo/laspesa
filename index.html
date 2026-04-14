@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#C94A0C">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="LaSpesa">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.png">
+<title>LaSpesa</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#F7F5F2;
+  --surface:#FFFFFF;
+  --surface2:#F0EDE8;
+  --surface3:#E8E4DE;
+  --border:#D6D0C8;
+  --ink:#1C1917;
+  --ink2:#6B6560;
+  --ink3:#A8A39D;
+  --accent:#C94A0C;
+  --accent-light:#FEF0E8;
+  --accent-border:#F5C4A8;
+  --green:#1A6B40;
+  --green-light:#E6F5ED;
+  --green-border:#A8D9BC;
+  --red:#DC2626;
+  --shadow-sm:0 1px 3px rgba(28,25,23,.07);
+  --shadow:0 2px 8px rgba(28,25,23,.09);
+  --shadow-lg:0 8px 28px rgba(28,25,23,.12);
+  --r:16px;--r-sm:12px;
+}
+html,body{height:100%;overscroll-behavior:none;}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);
+  display:flex;flex-direction:column;max-width:480px;margin:0 auto;min-height:100dvh;}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+
+/* ── LOADING ────────────────────────────────── */
+#loadingScreen{
+  position:fixed;inset:0;background:var(--surface);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:18px;z-index:300;transition:opacity .35s;
+}
+#loadingScreen.out{opacity:0;pointer-events:none;}
+.load-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:46px;
+  color:var(--ink);letter-spacing:-1px;}
+.load-logo span{color:var(--accent);}
+.load-icon{font-size:36px;animation:bounce 1.2s ease-in-out infinite;}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.load-txt{color:var(--ink3);font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;}
+
+/* ── PIN SCREEN ─────────────────────────────── */
+#pinScreen{
+  position:fixed;inset:0;background:var(--bg);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:32px 28px;z-index:200;
+}
+#pinScreen.hidden{display:none;}
+
+.pin-card{
+  background:var(--surface);border-radius:24px;padding:32px 28px;
+  width:100%;max-width:380px;box-shadow:var(--shadow-lg);
+  border:1.5px solid var(--border);
+}
+.pin-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:36px;
+  color:var(--ink);text-align:center;margin-bottom:4px;}
+.pin-logo span{color:var(--accent);}
+.pin-icon{text-align:center;font-size:28px;margin-bottom:6px;}
+.pin-tagline{color:var(--ink2);font-size:13px;font-weight:600;
+  text-align:center;margin-bottom:28px;line-height:1.6;}
+
+.field-wrap{margin-bottom:16px;}
+.field-lbl{font-size:11px;font-weight:800;text-transform:uppercase;
+  letter-spacing:.08em;color:var(--ink2);margin-bottom:6px;display:block;}
+.field-inp{
+  width:100%;background:var(--bg);border:2px solid var(--border);
+  border-radius:var(--r-sm);padding:13px 16px;
+  font-family:'Nunito',sans-serif;font-size:15px;font-weight:700;
+  color:var(--ink);outline:none;transition:border-color .2s,background .2s;
+}
+.field-inp:focus{border-color:var(--accent);background:var(--surface);}
+.field-inp::placeholder{color:var(--ink3);font-weight:500;}
+.field-inp.pin-style{font-size:24px;letter-spacing:.3em;text-align:center;}
+.field-inp.shake{animation:shake .35s;}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+
+.pin-btn{
+  width:100%;padding:15px;border:none;border-radius:var(--r-sm);
+  background:var(--accent);color:white;
+  font-family:'Nunito',sans-serif;font-size:16px;font-weight:800;
+  cursor:pointer;margin-top:4px;
+  box-shadow:0 4px 16px rgba(201,74,12,.32);
+  transition:opacity .15s,transform .1s;
+}
+.pin-btn:active{opacity:.85;transform:scale(.98);}
+.pin-btn:disabled{opacity:.5;cursor:default;transform:none;}
+.pin-hint{color:var(--ink3);font-size:11px;font-weight:600;
+  text-align:center;margin-top:16px;line-height:1.7;}
+
+/* ── MAIN APP ───────────────────────────────── */
+#mainApp{display:none;flex-direction:column;flex:1;min-height:100dvh;}
+#mainApp.visible{display:flex;}
+
+/* ── HEADER ─────────────────────────────────── */
+.header{
+  padding:14px 18px 12px;background:var(--surface);
+  border-bottom:1.5px solid var(--border);
+  position:sticky;top:0;z-index:10;box-shadow:var(--shadow-sm);
+}
+.header-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.h-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:24px;
+  color:var(--ink);line-height:1;display:flex;align-items:center;gap:7px;}
+.h-logo span{color:var(--accent);}
+.h-logo-icon{font-size:20px;}
+.sync-btn{
+  display:flex;align-items:center;gap:6px;
+  background:var(--surface2);border:1.5px solid var(--border);
+  border-radius:20px;padding:5px 12px;
+  font-size:11px;color:var(--ink2);font-weight:700;cursor:pointer;
+  transition:background .12s;
+}
+.sync-btn:active{background:var(--surface3);}
+.sdot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.sdot.ok{background:var(--green);}
+.sdot.loading{background:#F59E0B;animation:pulse 1s infinite;}
+.sdot.error{background:var(--red);}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+.stats-row{display:flex;gap:8px;}
+.chip{display:flex;align-items:center;gap:6px;border-radius:20px;padding:5px 12px;font-size:12px;font-weight:700;}
+.chip.orange{background:var(--accent-light);color:var(--accent);border:1.5px solid var(--accent-border);}
+.chip.green{background:var(--green-light);color:var(--green);border:1.5px solid var(--green-border);}
+.chip-dot{width:7px;height:7px;border-radius:50%;}
+
+/* ── ADD BAR ────────────────────────────────── */
+.add-bar{
+  display:flex;gap:10px;align-items:center;
+  padding:10px 16px;background:var(--surface);
+  border-bottom:1.5px solid var(--border);
+}
+.add-inp{
+  flex:1;background:var(--bg);border:2px solid var(--border);
+  border-radius:var(--r-sm);padding:11px 14px;
+  font-family:'Nunito',sans-serif;font-size:15px;font-weight:600;
+  color:var(--ink);outline:none;transition:border-color .2s;
+}
+.add-inp:focus{border-color:var(--accent);background:var(--surface);}
+.add-inp::placeholder{color:var(--ink3);font-weight:500;}
+.add-fab{
+  width:44px;height:44px;border-radius:var(--r-sm);
+  background:var(--accent);border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:26px;color:white;flex-shrink:0;
+  box-shadow:0 3px 10px rgba(201,74,12,.3);
+  transition:transform .12s,opacity .12s;
+}
+.add-fab:active{transform:scale(.88);opacity:.85;}
+
+/* ── CAT TABS ───────────────────────────────── */
+.cat-tabs{
+  display:flex;gap:6px;padding:10px 16px;
+  overflow-x:auto;scrollbar-width:none;
+  background:var(--surface);border-bottom:1.5px solid var(--border);
+}
+.cat-tabs::-webkit-scrollbar{display:none;}
+.ctab{
+  white-space:nowrap;padding:7px 14px;border-radius:20px;
+  font-size:12.5px;font-weight:700;cursor:pointer;
+  border:2px solid var(--border);background:var(--surface);
+  color:var(--ink2);transition:all .15s;flex-shrink:0;
+}
+.ctab.active{background:var(--accent);color:white;border-color:var(--accent);
+  box-shadow:0 2px 8px rgba(201,74,12,.25);}
+
+/* ── VIEWS ──────────────────────────────────── */
+.view{display:none;flex:1;flex-direction:column;overflow:hidden;}
+.view.active{display:flex;}
+.list-scroll{flex:1;overflow-y:auto;padding-bottom:90px;}
+
+/* ── SECTION ────────────────────────────────── */
+.sec-head{
+  display:flex;align-items:center;gap:8px;
+  padding:14px 16px 7px;cursor:pointer;user-select:none;
+}
+.sec-ico{font-size:16px;}
+.sec-lbl{font-family:'Syne',sans-serif;font-weight:700;font-size:11px;
+  text-transform:uppercase;letter-spacing:.08em;color:var(--ink2);flex:1;}
+.sec-cnt{
+  background:var(--surface2);border:1.5px solid var(--border);
+  border-radius:20px;padding:2px 10px;font-size:11px;font-weight:800;color:var(--ink2);
+}
+.sec-chev{font-size:11px;color:var(--ink3);transition:transform .2s;}
+.sec-chev.open{transform:rotate(90deg);}
+
+/* ── ITEM ───────────────────────────────────── */
+.item{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:13px 16px;cursor:pointer;
+  background:var(--surface);transition:background .1s;
+}
+.item:active{background:var(--surface2);}
+.item.checked{opacity:.42;}
+.chk{
+  width:24px;height:24px;border-radius:8px;
+  border:2px solid var(--border);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s;background:var(--surface);margin-top:1px;
+}
+.item.checked .chk{background:var(--green);border-color:var(--green);color:white;font-size:14px;font-weight:800;}
+.item-body{flex:1;min-width:0;}
+.item-name{font-size:15px;font-weight:700;color:var(--ink);line-height:1.25;}
+.item.checked .item-name{text-decoration:line-through;color:var(--ink3);}
+.item-meta{display:flex;align-items:center;gap:6px;margin-top:5px;flex-wrap:wrap;}
+.item-qty{
+  font-size:11.5px;font-weight:700;color:var(--ink2);
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:6px;padding:2px 8px;
+}
+.item-note{font-size:12px;color:var(--ink2);font-style:italic;font-weight:600;}
+.item-aside{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0;}
+.author-badge{font-size:10px;font-weight:800;color:white;border-radius:20px;padding:3px 10px;}
+.item-del{font-size:16px;color:var(--border);cursor:pointer;transition:color .15s;}
+.item-del:active{color:var(--red);}
+.item-div{height:1px;background:var(--border);margin:0 16px;}
+
+/* ── DONE SECTION ───────────────────────────── */
+.done-toggle{
+  display:flex;align-items:center;gap:8px;
+  padding:14px 16px 8px;cursor:pointer;user-select:none;
+  color:var(--ink2);font-size:13px;font-weight:700;
+}
+.done-chev{font-size:10px;transition:transform .2s;}
+.done-chev.open{transform:rotate(90deg);}
+
+/* ── EMPTY ──────────────────────────────────── */
+.empty{padding:64px 20px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px;}
+.empty-em{font-size:54px;}
+.empty-title{font-family:'Syne',sans-serif;font-weight:800;font-size:20px;color:var(--ink);}
+.empty-sub{font-size:14px;color:var(--ink2);line-height:1.6;font-weight:600;}
+
+/* ── BOTTOM NAV ─────────────────────────────── */
+.bnav{
+  position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+  width:100%;max-width:480px;background:var(--surface);
+  border-top:1.5px solid var(--border);
+  display:flex;justify-content:space-around;
+  padding:8px 0 calc(8px + env(safe-area-inset-bottom,0px));
+  z-index:20;box-shadow:0 -2px 12px rgba(28,25,23,.06);
+}
+.nbtn{
+  display:flex;flex-direction:column;align-items:center;gap:3px;
+  cursor:pointer;padding:6px 28px;border-radius:var(--r-sm);
+  border:none;background:transparent;transition:background .1s;
+}
+.nbtn:active{background:var(--surface2);}
+.nbtn-ico{font-size:22px;color:var(--ink3);}
+.nbtn-lbl{font-size:10px;color:var(--ink3);font-weight:700;}
+.nbtn.active .nbtn-ico,.nbtn.active .nbtn-lbl{color:var(--accent);}
+
+/* ── HISTORY ────────────────────────────────── */
+.view-scroll{flex:1;overflow-y:auto;padding-bottom:90px;}
+.view-title{font-family:'Syne',sans-serif;font-weight:800;font-size:22px;
+  padding:20px 16px 14px;color:var(--ink);}
+.hist-item{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:13px 16px;border-bottom:1px solid var(--border);background:var(--surface);
+}
+.hist-name{font-size:14px;font-weight:700;color:var(--ink);}
+.hist-meta{font-size:12px;color:var(--ink2);font-weight:600;margin-top:2px;}
+.hist-date{font-size:11px;color:var(--ink3);font-weight:600;text-align:right;flex-shrink:0;margin-left:12px;}
+
+/* ── SETTINGS ───────────────────────────────── */
+.settings-scroll{flex:1;overflow-y:auto;padding:16px 16px 90px;}
+.user-card{
+  background:var(--surface);border:1.5px solid var(--border);
+  border-radius:var(--r);padding:24px;margin-bottom:20px;
+  text-align:center;box-shadow:var(--shadow);
+}
+.user-name{font-family:'Syne',sans-serif;font-weight:800;font-size:28px;color:var(--ink);margin-bottom:8px;}
+.user-badge{display:inline-block;background:var(--accent);color:white;
+  border-radius:20px;padding:5px 18px;font-size:13px;font-weight:800;
+  box-shadow:0 2px 10px rgba(201,74,12,.3);}
+.sg-label{font-size:11px;font-weight:800;text-transform:uppercase;
+  letter-spacing:.08em;color:var(--ink2);margin-bottom:8px;padding:0 4px;}
+.sg{margin-bottom:16px;}
+.srow{
+  background:var(--surface);border:1.5px solid var(--border);
+  border-radius:var(--r-sm);padding:14px 16px;margin-bottom:6px;
+  display:flex;justify-content:space-between;align-items:center;
+  cursor:pointer;box-shadow:var(--shadow-sm);transition:background .1s;
+}
+.srow:active{background:var(--surface2);}
+.srow-lbl{font-size:15px;font-weight:700;color:var(--ink);}
+.srow-sub{font-size:12px;color:var(--ink2);font-weight:600;margin-top:2px;}
+.srow-ico{font-size:18px;}
+
+/* ── MODAL ──────────────────────────────────── */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(28,25,23,.48);
+  z-index:100;display:flex;align-items:flex-end;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .25s;
+}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal-sheet{
+  background:var(--surface);width:100%;max-width:480px;
+  border-radius:24px 24px 0 0;border-top:1.5px solid var(--border);
+  padding:20px 20px calc(28px + env(safe-area-inset-bottom,0px));
+  transform:translateY(100%);
+  transition:transform .28s cubic-bezier(.22,.68,0,1.2);
+  max-height:92dvh;overflow-y:auto;
+  box-shadow:0 -8px 32px rgba(28,25,23,.12);
+}
+.modal-overlay.open .modal-sheet{transform:translateY(0);}
+.modal-handle{width:40px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 20px;}
+.modal-title{font-family:'Syne',sans-serif;font-weight:800;font-size:22px;color:var(--ink);margin-bottom:18px;}
+.mfield{margin-bottom:14px;}
+.mlbl{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--ink2);margin-bottom:6px;}
+.minp{
+  width:100%;background:var(--bg);border:2px solid var(--border);
+  border-radius:var(--r-sm);padding:12px 14px;
+  font-family:'Nunito',sans-serif;font-size:15px;font-weight:700;
+  color:var(--ink);outline:none;transition:border-color .2s;
+}
+.minp:focus{border-color:var(--accent);background:var(--surface);}
+.minp::placeholder{color:var(--ink3);font-weight:500;}
+.cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.copt{
+  border:2px solid var(--border);border-radius:var(--r-sm);
+  padding:10px 6px;text-align:center;cursor:pointer;
+  font-size:12px;font-weight:700;color:var(--ink2);
+  background:var(--surface);transition:all .15s;
+}
+.copt:active{background:var(--surface2);}
+.copt.sel{border-color:var(--accent);background:var(--accent-light);color:var(--accent);}
+.copt-em{display:block;font-size:22px;margin-bottom:3px;}
+.mactions{display:flex;gap:10px;margin-top:20px;}
+.mbtn-cancel{
+  flex:1;padding:14px;border:2px solid var(--border);border-radius:var(--r-sm);
+  background:var(--surface);font-family:'Nunito',sans-serif;
+  font-size:14px;font-weight:700;color:var(--ink2);cursor:pointer;
+}
+.mbtn-cancel:active{background:var(--surface2);}
+.mbtn-ok{
+  flex:2;padding:14px;border:none;border-radius:var(--r-sm);
+  background:var(--accent);font-family:'Nunito',sans-serif;
+  font-size:15px;font-weight:800;color:white;cursor:pointer;
+  box-shadow:0 4px 14px rgba(201,74,12,.3);transition:opacity .12s;
+}
+.mbtn-ok:active{opacity:.82;}
+
+/* ── TOAST ──────────────────────────────────── */
+.toast{
+  position:fixed;top:72px;left:50%;transform:translateX(-50%) translateY(-8px);
+  background:var(--ink);color:white;padding:10px 20px;border-radius:20px;
+  font-size:13px;font-weight:700;white-space:nowrap;
+  opacity:0;transition:opacity .2s,transform .2s;
+  z-index:500;pointer-events:none;box-shadow:var(--shadow-lg);
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+
+<!-- LOADING -->
+<div id="loadingScreen">
+  <div class="load-icon">🛒</div>
+  <div class="load-logo">La<span>Spesa</span></div>
+  <div class="load-txt" id="loadTxt">Caricamento...</div>
+</div>
+
+<!-- PIN -->
+<div id="pinScreen" class="hidden">
+  <div class="pin-card">
+    <div class="pin-icon">🛒</div>
+    <div class="pin-logo">La<span>Spesa</span></div>
+    <div class="pin-tagline">Lista della spesa condivisa<br>Inserisci il codice famiglia per entrare</div>
+    <div class="field-wrap">
+      <label class="field-lbl">Il tuo nome</label>
+      <input class="field-inp" id="pinName" placeholder="es. Fabrizio" maxlength="18" autocomplete="off">
+    </div>
+    <div class="field-wrap">
+      <label class="field-lbl">Codice famiglia</label>
+      <input class="field-inp pin-style" id="pinField" type="password"
+        inputmode="numeric" placeholder="••••" maxlength="8" autocomplete="off"
+        onkeydown="if(event.key==='Enter')doPin()">
+    </div>
+    <button class="pin-btn" id="pinBtn" onclick="doPin()">Entra 🛒</button>
+    <div class="pin-hint">Il codice lo conosce chi gestisce l'app.<br>Chiedilo a Fabrizio!</div>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="mainApp">
+  <div class="header">
+    <div class="header-top">
+      <div class="h-logo">
+        <span class="h-logo-icon">🛒</span>La<span>Spesa</span>
+      </div>
+      <div class="sync-btn" onclick="loadItems()">
+        <div class="sdot loading" id="sdot"></div>
+        <span id="slbl">Sync...</span>
+      </div>
+    </div>
+    <div class="stats-row">
+      <div class="chip orange"><div class="chip-dot" style="background:var(--accent)"></div><span id="stPending">0 da comprare</span></div>
+      <div class="chip green"><div class="chip-dot" style="background:var(--green)"></div><span id="stDone">0 presi</span></div>
+    </div>
+  </div>
+
+  <!-- LIST VIEW -->
+  <div class="view active" id="viewList">
+    <div class="add-bar">
+      <input class="add-inp" id="quickInp" placeholder="Aggiungi un prodotto..."
+        onkeydown="if(event.key==='Enter')openModal()">
+      <button class="add-fab" onclick="openModal()">+</button>
+    </div>
+    <div class="cat-tabs" id="catTabs">
+      <div class="ctab active" onclick="filterCat(this,'all')">Tutti</div>
+      <div class="ctab" onclick="filterCat(this,'frutta')">🍎 Frutta</div>
+      <div class="ctab" onclick="filterCat(this,'carne')">🥩 Carne</div>
+      <div class="ctab" onclick="filterCat(this,'latticini')">🧀 Latticini</div>
+      <div class="ctab" onclick="filterCat(this,'pane')">🍞 Pane</div>
+      <div class="ctab" onclick="filterCat(this,'pulizia')">🧹 Pulizia</div>
+      <div class="ctab" onclick="filterCat(this,'altro')">📦 Altro</div>
+    </div>
+    <div class="list-scroll" id="listBody"></div>
+  </div>
+
+  <!-- HISTORY VIEW -->
+  <div class="view" id="viewHistory">
+    <div class="view-scroll">
+      <div class="view-title">📋 Storico acquisti</div>
+      <div id="histBody"></div>
+    </div>
+  </div>
+
+  <!-- SETTINGS VIEW -->
+  <div class="view" id="viewSettings">
+    <div class="settings-scroll">
+      <div class="user-card">
+        <div class="user-name" id="uName"></div>
+        <div class="user-badge" id="uBadge"></div>
+      </div>
+      <div class="sg">
+        <div class="sg-label">Lista</div>
+        <div class="srow" onclick="loadItems();toast('Aggiornamento...')">
+          <div><div class="srow-lbl">Aggiorna lista</div><div class="srow-sub">Ricarica i dati da Airtable</div></div>
+          <div class="srow-ico">🔄</div>
+        </div>
+        <div class="srow" onclick="doClearDone()">
+          <div><div class="srow-lbl">Rimuovi prodotti presi</div><div class="srow-sub">Cancella tutto quello già spuntato</div></div>
+          <div class="srow-ico">🗑</div>
+        </div>
+        <div class="srow" onclick="doClearAll()">
+          <div><div class="srow-lbl">Svuota lista completa</div><div class="srow-sub">Ricomincia da zero</div></div>
+          <div class="srow-ico">⚠️</div>
+        </div>
+      </div>
+      <div class="sg">
+        <div class="sg-label">Account</div>
+        <div class="srow" onclick="doLogout()">
+          <div><div class="srow-lbl">Esci / Cambia nome</div><div class="srow-sub">Torna alla schermata di accesso</div></div>
+          <div class="srow-ico">👋</div>
+        </div>
+      </div>
+      <div class="sg">
+        <div class="sg-label">Info</div>
+        <div class="srow" style="cursor:default">
+          <div><div class="srow-lbl">LaSpesa v1.0</div><div class="srow-sub">Powered by Airtable · GitHub Pages</div></div>
+          <div class="srow-ico">❤️</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <div class="bnav">
+    <button class="nbtn active" id="navList" onclick="switchView('List')">
+      <span class="nbtn-ico">🛒</span><span class="nbtn-lbl">Lista</span>
+    </button>
+    <button class="nbtn" id="navHistory" onclick="switchView('History')">
+      <span class="nbtn-ico">📋</span><span class="nbtn-lbl">Storico</span>
+    </button>
+    <button class="nbtn" id="navSettings" onclick="switchView('Settings')">
+      <span class="nbtn-ico">⚙️</span><span class="nbtn-lbl">Impostazioni</span>
+    </button>
+  </div>
+</div>
+
+<!-- ADD MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOut(event)">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Aggiungi prodotto</div>
+    <div class="mfield">
+      <div class="mlbl">Nome prodotto *</div>
+      <input class="minp" id="mName" placeholder="es. Latte intero">
+    </div>
+    <div class="mfield">
+      <div class="mlbl">Quantità</div>
+      <input class="minp" id="mQty" placeholder="es. 2 litri, 500g">
+    </div>
+    <div class="mfield">
+      <div class="mlbl">Nota</div>
+      <input class="minp" id="mNote" placeholder="es. Solo marca Parmalat">
+    </div>
+    <div class="mfield">
+      <div class="mlbl">Categoria</div>
+      <div class="cat-grid">
+        <div class="copt sel" data-cat="frutta" onclick="selCat(this)"><span class="copt-em">🍎</span>Frutta</div>
+        <div class="copt" data-cat="carne" onclick="selCat(this)"><span class="copt-em">🥩</span>Carne</div>
+        <div class="copt" data-cat="latticini" onclick="selCat(this)"><span class="copt-em">🧀</span>Latticini</div>
+        <div class="copt" data-cat="pane" onclick="selCat(this)"><span class="copt-em">🍞</span>Pane</div>
+        <div class="copt" data-cat="pulizia" onclick="selCat(this)"><span class="copt-em">🧹</span>Pulizia</div>
+        <div class="copt" data-cat="altro" onclick="selCat(this)"><span class="copt-em">📦</span>Altro</div>
+      </div>
+    </div>
+    <div class="mactions">
+      <button class="mbtn-cancel" onclick="closeModal()">Annulla</button>
+      <button class="mbtn-ok" onclick="doAdd()">➕ Aggiungi</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── CONFIG ────────────────────────────────────────────────────
+const PIN          = "310378";   // ← cambia il tuo PIN qui
+const AT_TOKEN     = "patnaSIB6mZ28y1QZ.075ec69331485aec61caf6863657e4338d0fc69a2bd3e80f4db822a9c92c9aad";
+const BASE_ID      = "appwd5hSBNKVupHQY";
+const TBL_LISTA    = "tblJrYkIo2s7XuElK";
+const TBL_STORICO  = "tblpdd0NZoD2p0RwB";
+const AT_URL       = `https://api.airtable.com/v0/${BASE_ID}`;
+
+// ── COSTANTI ──────────────────────────────────────────────────
+const CATS = {
+  frutta:    {label:'Frutta & Verdura', icon:'🍎'},
+  carne:     {label:'Carne & Pesce',   icon:'🥩'},
+  latticini: {label:'Latticini',       icon:'🧀'},
+  pane:      {label:'Pane & Cereali',  icon:'🍞'},
+  pulizia:   {label:'Pulizia',         icon:'🧹'},
+  altro:     {label:'Altro',           icon:'📦'},
+};
+const CAT_ORDER   = ['frutta','carne','latticini','pane','pulizia','altro'];
+const COLORS      = ['#C94A0C','#B45309','#1A6B40','#1D4ED8','#7C3AED','#B91C1C'];
+
+// ── STATO ─────────────────────────────────────────────────────
+let user=null, items=[], currentCat='all', selCatModal='frutta';
+let doneOpen=false, toastTimer, pollTimer;
+
+// ── AIRTABLE API ──────────────────────────────────────────────
+async function atFetch(method, table, body, id) {
+  // Tutte le chiamate passano per il Cloudflare Worker che aggiunge CORS
+  const base = `https://laspesa-proxy.fabriziocuozzo.workers.dev/v0/${BASE_ID}`;
+  // Split table name from any query string
+  const [tbl, qs] = table.split('?');
+  const url = id
+    ? `${base}/${tbl}/${id}`
+    : qs ? `${base}/${tbl}?${qs}` : `${base}/${tbl}`;
+  const res  = await fetch(url, {
+    method,
+    headers: { "Content-Type": "application/json" },
+    body: body ? JSON.stringify(body) : undefined
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.error?.message || res.statusText);
+  }
+  return method === "DELETE" ? {} : res.json();
+}
+  return method === 'DELETE' ? {} : res.json();
+}
+
+async function getItems() {
+  // Fetch all records (max 100 per call, per semplicità bastano)
+  const res = await atFetch('GET', `${TBL_LISTA}?sort%5B0%5D%5Bfield%5D=createdAt&sort%5B0%5D%5Bdirection%5D=desc&maxRecords=200`);
+  return (res.records || []).map(r => ({
+    id:          r.id,
+    nome:        r.fields.nome        || '',
+    qty:         r.fields.qty         || '',
+    nota:        r.fields.nota        || '',
+    cat:         r.fields.cat         || 'altro',
+    autore:      r.fields.autore      || '',
+    authorColor: r.fields.authorColor || 0,
+    done:        !!r.fields.done,
+    createdAt:   r.fields.createdAt   || '',
+    doneAt:      r.fields.doneAt      || '',
+  }));
+}
+
+async function addItem(nome, qty, nota, cat, autore, colorIdx) {
+  const now = new Date().toISOString();
+  await atFetch('POST', TBL_LISTA, {
+    fields: { nome, qty, nota, cat, autore, authorColor: colorIdx, done: false, createdAt: now, doneAt: '' }
+  });
+}
+
+async function toggleItem(id, currentDone, autore) {
+  const newDone = !currentDone;
+  const doneAt  = newDone ? new Date().toISOString() : '';
+  await atFetch('PATCH', TBL_LISTA, { fields: { done: newDone, doneAt } }, id);
+  if (newDone) {
+    const item = items.find(i => i.id === id);
+    if (item) await atFetch('POST', TBL_STORICO, {
+      fields: { nome: item.nome, qty: item.qty, cat: item.cat, autore, doneAt }
+    });
+  }
+}
+
+async function deleteItem(id) {
+  await atFetch('DELETE', `${TBL_LISTA}/${id}`);
+}
+
+async function getHistory() {
+  const res = await atFetch('GET', `${TBL_STORICO}?sort%5B0%5D%5Bfield%5D=doneAt&sort%5B0%5D%5Bdirection%5D=desc&maxRecords=60`);
+  return (res.records || []).map(r => r.fields);
+}
+
+// ── BOOT ──────────────────────────────────────────────────────
+window.onload = function() {
+  const saved = localStorage.getItem('laspesa_user');
+  if (saved) {
+    user = JSON.parse(saved);
+    showMain();
+  } else {
+    fadeOut('loadingScreen');
+    setTimeout(() => {
+      document.getElementById('loadingScreen').style.display = 'none';
+      document.getElementById('pinScreen').classList.remove('hidden');
+      setTimeout(() => document.getElementById('pinName').focus(), 100);
+    }, 350);
+  }
+};
+
+function fadeOut(id) { document.getElementById(id).classList.add('out'); }
+
+// ── PIN ───────────────────────────────────────────────────────
+function doPin() {
+  const name = document.getElementById('pinName').value.trim();
+  const pin  = document.getElementById('pinField').value.trim();
+  if (!name) { toast('Inserisci il tuo nome!'); return; }
+  if (!pin)  { toast('Inserisci il codice!'); return; }
+  if (pin !== PIN) {
+    const pf = document.getElementById('pinField');
+    pf.value = ''; pf.classList.add('shake');
+    setTimeout(() => pf.classList.remove('shake'), 400);
+    toast('❌ Codice errato!'); return;
+  }
+  user = { name, colorIdx: [...name].reduce((a,c) => a + c.charCodeAt(0), 0) % COLORS.length };
+  localStorage.setItem('laspesa_user', JSON.stringify(user));
+  showMain();
+}
+
+function doLogout() {
+  localStorage.removeItem('laspesa_user');
+  clearInterval(pollTimer);
+  location.reload();
+}
+
+// ── MAIN ──────────────────────────────────────────────────────
+function showMain() {
+  document.getElementById('loadingScreen').style.display = 'none';
+  document.getElementById('pinScreen').classList.add('hidden');
+  const app = document.getElementById('mainApp');
+  app.classList.add('visible');
+  document.getElementById('uName').textContent  = user.name;
+  document.getElementById('uBadge').textContent = user.name;
+  loadItems();
+  pollTimer = setInterval(loadItems, 25000);
+}
+
+// ── LOAD ──────────────────────────────────────────────────────
+async function loadItems() {
+  setSyncState('loading');
+  try {
+    items = await getItems();
+    setSyncState('ok');
+    render();
+  } catch(e) {
+    setSyncState('error');
+    toast('Errore connessione Airtable');
+  }
+}
+
+function setSyncState(s) {
+  const dot = document.getElementById('sdot');
+  const lbl = document.getElementById('slbl');
+  dot.className = 'sdot ' + (s==='loading'?'loading':s==='error'?'error':'ok');
+  lbl.textContent = s==='loading'?'Sync...':s==='error'?'Errore':'Live';
+}
+
+// ── RENDER ────────────────────────────────────────────────────
+function render() {
+  const body     = document.getElementById('listBody');
+  const filtered = items.filter(i => currentCat==='all' || i.cat===currentCat);
+  const pending  = filtered.filter(i => !i.done);
+  const done     = filtered.filter(i =>  i.done);
+
+  document.getElementById('stPending').textContent = items.filter(i=>!i.done).length + ' da comprare';
+  document.getElementById('stDone').textContent    = items.filter(i=> i.done).length + ' presi';
+
+  if (!items.length) { body.innerHTML = mkEmpty('🛒','Lista vuota!','Aggiungi il primo prodotto con il + qui sopra.'); return; }
+  if (!pending.length && !done.length) { body.innerHTML = mkEmpty('🔍','Niente qui','In questa categoria non c\'è nulla da comprare.'); return; }
+
+  const groups = {};
+  pending.forEach(i => { const c = i.cat||'altro'; if(!groups[c]) groups[c]=[]; groups[c].push(i); });
+
+  let html = '';
+  CAT_ORDER.filter(c => groups[c]).forEach(cat => {
+    const info = CATS[cat];
+    html += `<div class="sec-head" onclick="toggleSec('${cat}')">
+      <span class="sec-ico">${info.icon}</span>
+      <span class="sec-lbl">${info.label}</span>
+      <span class="sec-cnt">${groups[cat].length}</span>
+      <span class="sec-chev open" id="chev-${cat}">▶</span>
+    </div>
+    <div id="sec-${cat}">
+      ${groups[cat].map((it,i) => mkItem(it) + (i<groups[cat].length-1?'<div class="item-div"></div>':'')).join('')}
+    </div>`;
+  });
+
+  if (done.length) {
+    html += `<div class="done-toggle" onclick="toggleDone()">
+      <span class="done-chev ${doneOpen?'open':''}" id="doneChev">▶</span>
+      Già presi (${done.length})
+    </div>`;
+    if (doneOpen) html += `<div>${done.map((it,i)=>mkItem(it)+(i<done.length-1?'<div class="item-div"></div>':'')).join('')}</div>`;
+  }
+  body.innerHTML = html;
+}
+
+function mkItem(it) {
+  const color   = COLORS[(it.authorColor||0) % COLORS.length];
+  const initial = it.autore ? it.autore[0].toUpperCase() : '?';
+  const isMe    = it.autore === user?.name;
+  return `<div class="item ${it.done?'checked':''}" onclick="doToggle('${it.id}',${it.done})">
+    <div class="chk">${it.done?'✓':''}</div>
+    <div class="item-body">
+      <div class="item-name">${esc(it.nome)}</div>
+      <div class="item-meta">
+        ${it.qty  ? `<span class="item-qty">${esc(it.qty)}</span>` : ''}
+        ${it.nota ? `<span class="item-note">${esc(it.nota)}</span>` : ''}
+      </div>
+    </div>
+    <div class="item-aside">
+      <span class="author-badge" style="background:${color}">${initial}</span>
+      ${isMe ? `<span class="item-del" onclick="doDel(event,'${it.id}')">🗑</span>` : ''}
+    </div>
+  </div>`;
+}
+
+function mkEmpty(em, title, sub) {
+  return `<div class="empty"><div class="empty-em">${em}</div>
+    <div class="empty-title">${title}</div><div class="empty-sub">${sub}</div></div>`;
+}
+
+// ── ACTIONS ───────────────────────────────────────────────────
+async function doToggle(id, currentDone) {
+  const item = items.find(i => i.id===id);
+  if (!item) return;
+  item.done = !currentDone;
+  render();
+  try {
+    await toggleItem(id, currentDone, user.name);
+    await loadItems();
+  } catch(e) {
+    item.done = currentDone;
+    render();
+    toast('Errore aggiornamento');
+  }
+}
+
+async function doDel(e, id) {
+  e.stopPropagation();
+  items = items.filter(i => i.id !== id);
+  render();
+  try {
+    await deleteItem(id);
+    toast('🗑 Rimosso');
+  } catch(e) {
+    await loadItems();
+    toast('Errore eliminazione');
+  }
+}
+
+async function doAdd() {
+  const nome = document.getElementById('mName').value.trim();
+  if (!nome) { toast('Inserisci il nome del prodotto!'); return; }
+  const qty  = document.getElementById('mQty').value.trim();
+  const nota = document.getElementById('mNote').value.trim();
+  const tmp  = { id:'tmp_'+Date.now(), nome, qty, nota, cat:selCatModal,
+    autore:user.name, authorColor:user.colorIdx, done:false, createdAt:new Date().toISOString() };
+  items.unshift(tmp);
+  closeModal(); render(); toast('✅ Aggiunto!');
+  try {
+    await addItem(nome, qty, nota, selCatModal, user.name, user.colorIdx);
+    await loadItems();
+  } catch(e) {
+    items = items.filter(i => i.id !== tmp.id);
+    render(); toast('Errore salvataggio');
+  }
+}
+
+async function doClearDone() {
+  if (!confirm('Rimuovere tutti i prodotti già presi?')) return;
+  const toDelete = items.filter(i => i.done);
+  items = items.filter(i => !i.done);
+  render();
+  try {
+    await Promise.all(toDelete.map(i => deleteItem(i.id)));
+    toast('Fatto!');
+    await loadItems();
+  } catch(e) { await loadItems(); toast('Errore'); }
+}
+
+async function doClearAll() {
+  if (!confirm('Sei sicuro? Verranno cancellati TUTTI i prodotti.')) return;
+  const all = [...items];
+  items = []; render();
+  try {
+    await Promise.all(all.map(i => deleteItem(i.id)));
+    toast('Lista svuotata');
+  } catch(e) { await loadItems(); toast('Errore'); }
+}
+
+// ── HISTORY ───────────────────────────────────────────────────
+async function loadHistory() {
+  const body = document.getElementById('histBody');
+  body.innerHTML = mkEmpty('⏳','Caricamento...','');
+  try {
+    const data = await getHistory();
+    if (!data.length) { body.innerHTML = mkEmpty('📋','Nessuno storico','Gli articoli presi appariranno qui.'); return; }
+    body.innerHTML = data.map(h => {
+      const info = CATS[h.cat]||CATS.altro;
+      const d    = h.doneAt ? new Date(h.doneAt) : null;
+      const ds   = d ? d.toLocaleDateString('it-IT',{day:'2-digit',month:'short'})+' '+
+                       d.toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'}) : '';
+      return `<div class="hist-item">
+        <div>
+          <div class="hist-name">${info.icon} ${esc(h.nome)}</div>
+          <div class="hist-meta">${h.qty?h.qty+' · ':''}${h.autore||'?'}</div>
+        </div>
+        <div class="hist-date">${ds}</div>
+      </div>`;
+    }).join('');
+  } catch(e) { body.innerHTML = mkEmpty('❌','Errore','Non riesco a caricare lo storico.'); }
+}
+
+// ── UI ────────────────────────────────────────────────────────
+function filterCat(el,cat) {
+  document.querySelectorAll('.ctab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active'); currentCat=cat; render();
+}
+function toggleSec(cat) {
+  const s=document.getElementById('sec-'+cat), c=document.getElementById('chev-'+cat);
+  if(!s) return;
+  const h=s.style.display==='none'; s.style.display=h?'':'none'; c.classList.toggle('open',h);
+}
+function toggleDone() { doneOpen=!doneOpen; render(); }
+function switchView(v) {
+  document.querySelectorAll('.view').forEach(e=>e.classList.remove('active'));
+  document.querySelectorAll('.nbtn').forEach(e=>e.classList.remove('active'));
+  document.getElementById('view'+v).classList.add('active');
+  document.getElementById('nav'+v).classList.add('active');
+  if(v==='History') loadHistory();
+}
+function openModal() {
+  const qi=document.getElementById('quickInp');
+  document.getElementById('mName').value=qi.value||'';
+  document.getElementById('mQty').value='';
+  document.getElementById('mNote').value='';
+  qi.value='';
+  document.getElementById('modalOverlay').classList.add('open');
+  setTimeout(()=>document.getElementById('mName').focus(),300);
+}
+function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); }
+function closeModalOut(e) { if(e.target.id==='modalOverlay') closeModal(); }
+function selCat(el) {
+  document.querySelectorAll('.copt').forEach(o=>o.classList.remove('sel'));
+  el.classList.add('sel'); selCatModal=el.dataset.cat;
+}
+function toast(msg) {
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),2300);
+}
+function esc(s) { return s?String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'):''; }
+</script>
+</body>
+</html>
