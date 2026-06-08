@@ -1,26 +1,4 @@
 {
-  "items": [
-    {
-      "id": "i1780949992354",
-      "nome": "Pane",
-      "qty": "",
-      "nota": "",
-      "autore": "Fabrizio",
-      "colorIdx": 0,
-      "done": false,
-      "ts": 1780949992354
-    },
-    {
-      "id": "i1780949952861",
-      "nome": "Latte",
-      "qty": "",
-      "nota": "",
-      "autore": "Fabrizio",
-      "colorIdx": 0,
-      "done": true,
-      "ts": 1780949952861,
-      "doneAt": 1780949969060
-    }
-  ],
+  "items": [],
   "history": {}
 }
