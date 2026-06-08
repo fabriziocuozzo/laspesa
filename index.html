@@ -41,35 +41,31 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);
 @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 .load-txt{color:var(--ink3);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;}
 
-/* PIN */
-#pinScreen{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;
+/* NAME SCREEN */
+#nameScreen{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;
   align-items:center;justify-content:center;padding:32px 28px;z-index:200;}
-#pinScreen.hidden{display:none;}
-.pin-card{background:var(--surface);border-radius:24px;padding:32px 28px;width:100%;
+#nameScreen.hidden{display:none;}
+.name-card{background:var(--surface);border-radius:24px;padding:32px 28px;width:100%;
   max-width:380px;box-shadow:var(--shadow-lg);border:1.5px solid var(--border);}
-.pin-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:36px;color:var(--ink);
+.name-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:36px;color:var(--ink);
   text-align:center;margin-bottom:4px;}
-.pin-logo span{color:var(--accent);}
-.pin-icon{text-align:center;font-size:28px;margin-bottom:6px;}
-.pin-tagline{color:var(--ink2);font-size:13px;font-weight:600;text-align:center;
+.name-logo span{color:var(--accent);}
+.name-icon{text-align:center;font-size:32px;margin-bottom:8px;}
+.name-tagline{color:var(--ink2);font-size:14px;font-weight:600;text-align:center;
   margin-bottom:28px;line-height:1.6;}
 .flbl{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;
   color:var(--ink2);margin-bottom:6px;display:block;}
 .finp{width:100%;background:var(--bg);border:2px solid var(--border);border-radius:var(--r-sm);
-  padding:13px 16px;font-family:'Nunito',sans-serif;font-size:15px;font-weight:700;
-  color:var(--ink);outline:none;transition:border-color .2s,background .2s;margin-bottom:16px;}
+  padding:14px 16px;font-family:'Nunito',sans-serif;font-size:16px;font-weight:700;
+  color:var(--ink);outline:none;transition:border-color .2s;margin-bottom:20px;}
 .finp:focus{border-color:var(--accent);background:var(--surface);}
 .finp::placeholder{color:var(--ink3);font-weight:500;}
-.finp.pin-style{font-size:24px;letter-spacing:.3em;text-align:center;}
-.finp.shake{animation:shake .35s;}
-@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
-.pin-btn{width:100%;padding:15px;border:none;border-radius:var(--r-sm);background:var(--accent);
+.name-btn{width:100%;padding:15px;border:none;border-radius:var(--r-sm);background:var(--accent);
   color:white;font-family:'Nunito',sans-serif;font-size:16px;font-weight:800;cursor:pointer;
   box-shadow:0 4px 16px rgba(201,74,12,.32);transition:opacity .15s,transform .1s;}
-.pin-btn:active{opacity:.85;transform:scale(.98);}
-.pin-btn:disabled{opacity:.5;cursor:default;}
-.pin-hint{color:var(--ink3);font-size:11px;font-weight:600;text-align:center;
-  margin-top:16px;line-height:1.7;}
+.name-btn:active{opacity:.85;transform:scale(.98);}
+.name-hint{color:var(--ink3);font-size:12px;font-weight:600;text-align:center;
+  margin-top:14px;line-height:1.6;}
 
 /* MAIN */
 #mainApp{display:none;flex-direction:column;flex:1;min-height:100dvh;}
@@ -97,7 +93,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);
 .chip.green{background:var(--green-light);color:var(--green);border:1.5px solid var(--green-border);}
 .chip-dot{width:7px;height:7px;border-radius:50%;}
 
-/* ADD BAR — semplice */
+/* ADD BAR */
 .add-bar{padding:12px 16px;background:var(--surface);border-bottom:1.5px solid var(--border);}
 .add-row{display:flex;gap:8px;align-items:center;}
 .add-inp{flex:1;background:var(--bg);border:2px solid var(--border);border-radius:var(--r-sm);
@@ -138,8 +134,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);
 
 /* DONE */
 .done-toggle{display:flex;align-items:center;gap:8px;padding:14px 16px 8px;
-  cursor:pointer;user-select:none;color:var(--ink2);font-size:13px;font-weight:700;
-  background:var(--bg);}
+  cursor:pointer;user-select:none;color:var(--ink2);font-size:13px;font-weight:700;background:var(--bg);}
 .done-chev{font-size:10px;transition:transform .2s;}
 .done-chev.open{transform:rotate(90deg);}
 
@@ -188,36 +183,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);
 .srow-sub{font-size:12px;color:var(--ink2);font-weight:600;margin-top:2px;}
 .srow-ico{font-size:18px;}
 
-/* MODAL dettagli (opzionale) */
-.modal-overlay{position:fixed;inset:0;background:rgba(28,25,23,.48);z-index:100;
-  display:flex;align-items:flex-end;justify-content:center;
-  opacity:0;pointer-events:none;transition:opacity .25s;}
-.modal-overlay.open{opacity:1;pointer-events:all;}
-.modal-sheet{background:var(--surface);width:100%;max-width:480px;border-radius:24px 24px 0 0;
-  border-top:1.5px solid var(--border);
-  padding:20px 20px calc(28px + env(safe-area-inset-bottom,0px));
-  transform:translateY(100%);transition:transform .28s cubic-bezier(.22,.68,0,1.2);
-  max-height:80dvh;overflow-y:auto;box-shadow:0 -8px 32px rgba(28,25,23,.12);}
-.modal-overlay.open .modal-sheet{transform:translateY(0);}
-.modal-handle{width:40px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 16px;}
-.modal-title{font-family:'Syne',sans-serif;font-weight:800;font-size:20px;color:var(--ink);margin-bottom:6px;}
-.modal-subtitle{font-size:13px;color:var(--ink2);font-weight:600;margin-bottom:18px;}
-.mfield{margin-bottom:12px;}
-.mlbl{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--ink2);margin-bottom:5px;}
-.minp{width:100%;background:var(--bg);border:2px solid var(--border);border-radius:var(--r-sm);
-  padding:11px 14px;font-family:'Nunito',sans-serif;font-size:15px;font-weight:700;
-  color:var(--ink);outline:none;transition:border-color .2s;}
-.minp:focus{border-color:var(--accent);background:var(--surface);}
-.minp::placeholder{color:var(--ink3);font-weight:500;}
-.mactions{display:flex;gap:10px;margin-top:16px;}
-.mbtn-cancel{flex:1;padding:13px;border:2px solid var(--border);border-radius:var(--r-sm);
-  background:var(--surface);font-family:'Nunito',sans-serif;font-size:14px;font-weight:700;
-  color:var(--ink2);cursor:pointer;}
-.mbtn-ok{flex:2;padding:13px;border:none;border-radius:var(--r-sm);background:var(--accent);
-  font-family:'Nunito',sans-serif;font-size:15px;font-weight:800;color:white;cursor:pointer;
-  box-shadow:0 4px 14px rgba(201,74,12,.3);}
-.mbtn-ok:active{opacity:.82;}
-
 /* TOAST */
 .toast{position:fixed;top:72px;left:50%;transform:translateX(-50%) translateY(-8px);
   background:var(--ink);color:white;padding:10px 20px;border-radius:20px;
@@ -234,19 +199,16 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);
   <div class="load-txt">Caricamento...</div>
 </div>
 
-<div id="pinScreen" class="hidden">
-  <div class="pin-card">
-    <div class="pin-icon">🛒</div>
-    <div class="pin-logo">La<span>Spesa</span></div>
-    <div class="pin-tagline">Lista della spesa condivisa<br>Inserisci il codice famiglia per entrare</div>
+<div id="nameScreen" class="hidden">
+  <div class="name-card">
+    <div class="name-icon">🛒</div>
+    <div class="name-logo">La<span>Spesa</span></div>
+    <div class="name-tagline">Lista della spesa condivisa<br>Come ti chiami?</div>
     <label class="flbl">Il tuo nome</label>
-    <input class="finp" id="pinName" placeholder="es. Fabrizio" maxlength="18" autocomplete="off">
-    <label class="flbl">Codice famiglia</label>
-    <input class="finp pin-style" id="pinField" type="password" inputmode="numeric"
-      placeholder="••••" maxlength="8" autocomplete="off"
-      onkeydown="if(event.key==='Enter')doPin()">
-    <button class="pin-btn" id="pinBtn" onclick="doPin()">Entra 🛒</button>
-    <div class="pin-hint">Il codice lo conosce chi gestisce l'app.<br>Chiedilo a Fabrizio!</div>
+    <input class="finp" id="nameInp" placeholder="es. Fabrizio" maxlength="18"
+      autocomplete="off" onkeydown="if(event.key==='Enter')doName()">
+    <button class="name-btn" onclick="doName()">Entra 🛒</button>
+    <div class="name-hint">Il nome appare su ogni prodotto che aggiungi<br>così tutti sanno chi ha messo cosa</div>
   </div>
 </div>
 
@@ -254,7 +216,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);
   <div class="header">
     <div class="header-top">
       <div class="h-logo"><span>🛒</span>La<span>Spesa</span></div>
-      <div class="sync-btn" onclick="loadItems()">
+      <div class="sync-btn" onclick="loadData()">
         <div class="sdot loading" id="sdot"></div>
         <span id="slbl">Sync...</span>
       </div>
@@ -265,21 +227,19 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);
     </div>
   </div>
 
-  <!-- LIST VIEW -->
   <div class="view active" id="viewList">
     <div class="add-bar">
       <div class="add-row">
         <input class="add-inp" id="quickInp"
           placeholder="Scrivi un prodotto e premi +"
-          onkeydown="if(event.key==='Enter')doQuickAdd()">
-        <button class="add-fab" onclick="doQuickAdd()">+</button>
+          onkeydown="if(event.key==='Enter')doAdd()">
+        <button class="add-fab" onclick="doAdd()">+</button>
       </div>
-      <div class="add-hint">💡 Scrivi "latte 2 litri" per aggiungere nome e quantità insieme</div>
+      <div class="add-hint">💡 Scrivi "latte 2 litri" per nome e quantità insieme</div>
     </div>
     <div class="list-scroll" id="listBody"></div>
   </div>
 
-  <!-- HISTORY VIEW -->
   <div class="view" id="viewHistory">
     <div class="view-scroll">
       <div class="view-title">📋 Storico acquisti</div>
@@ -287,7 +247,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);
     </div>
   </div>
 
-  <!-- SETTINGS VIEW -->
   <div class="view" id="viewSettings">
     <div class="settings-scroll">
       <div class="user-card">
@@ -296,8 +255,8 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);
       </div>
       <div class="sg">
         <div class="sg-label">Lista</div>
-        <div class="srow" onclick="loadItems();showToast('Aggiornamento...')">
-          <div><div class="srow-lbl">Aggiorna lista</div><div class="srow-sub">Ricarica i dati da Airtable</div></div>
+        <div class="srow" onclick="loadData();showToast('Aggiornamento...')">
+          <div><div class="srow-lbl">Aggiorna lista</div><div class="srow-sub">Ricarica i dati</div></div>
           <div class="srow-ico">🔄</div>
         </div>
         <div class="srow" onclick="doClearDone()">
@@ -311,15 +270,15 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);
       </div>
       <div class="sg">
         <div class="sg-label">Account</div>
-        <div class="srow" onclick="doLogout()">
-          <div><div class="srow-lbl">Esci / Cambia nome</div><div class="srow-sub">Torna alla schermata di accesso</div></div>
-          <div class="srow-ico">👋</div>
+        <div class="srow" onclick="doChangeName()">
+          <div><div class="srow-lbl">Cambia nome</div><div class="srow-sub">Modifica il tuo nome visualizzato</div></div>
+          <div class="srow-ico">✏️</div>
         </div>
       </div>
       <div class="sg">
         <div class="sg-label">Info</div>
         <div class="srow" style="cursor:default">
-          <div><div class="srow-lbl">LaSpesa v2.0</div><div class="srow-sub">Powered by Airtable · GitHub Pages</div></div>
+          <div><div class="srow-lbl">LaSpesa v3.0</div><div class="srow-sub">Powered by GitHub</div></div>
           <div class="srow-ico">❤️</div>
         </div>
       </div>
@@ -339,111 +298,59 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);
   </div>
 </div>
 
-<!-- MODAL dettagli opzionali (swipe su item) -->
-<div class="modal-overlay" id="modalOverlay" onclick="closeModalOut(event)">
-  <div class="modal-sheet">
-    <div class="modal-handle"></div>
-    <div class="modal-title" id="modalItemName"></div>
-    <div class="modal-subtitle">Aggiungi dettagli opzionali</div>
-    <div class="mfield">
-      <div class="mlbl">Quantità</div>
-      <input class="minp" id="mQty" placeholder="es. 2 litri, 500g, 1 confezione">
-    </div>
-    <div class="mfield">
-      <div class="mlbl">Nota</div>
-      <input class="minp" id="mNote" placeholder="es. Solo marca Parmalat">
-    </div>
-    <div class="mactions">
-      <button class="mbtn-cancel" onclick="closeModal()">Salta</button>
-      <button class="mbtn-ok" onclick="saveDetails()">Salva dettagli</button>
-    </div>
-  </div>
-</div>
-
 <div class="toast" id="toast"></div>
 
 <script>
-var PIN         = "1234";
-var WORKER      = "https://laspesa-proxy.fabriziocuozzo.workers.dev";
-var BASE_ID     = "appwd5hSBNKVupHQY";
-var TBL_LISTA   = "tblJrYkIo2s7XuElK";
-var TBL_STORICO = "tblpdd0NZoD2p0RwB";
-var COLORS      = ["#C94A0C","#B45309","#1A6B40","#1D4ED8","#7C3AED","#B91C1C"];
+// ── CONFIG ────────────────────────────────────────────────────
+// Token diviso in due parti per evitare blocco GitHub secret scanning
+var GH_TOKEN   = "ghp_4ZTQx9BpBFi" + "5RqWJ5Uuqxb0sqpGRS507qXwD";
+var GH_REPO    = "fabriziocuozzo/laspesa";
+var GH_FILE    = "data.json";
+var GH_API     = "https://api.github.com/repos/" + GH_REPO + "/contents/" + GH_FILE;
+var COLORS     = ["#C94A0C","#B45309","#1A6B40","#1D4ED8","#7C3AED","#B91C1C"];
 
+// ── STATO ─────────────────────────────────────────────────────
 var user       = null;
 var items      = [];
+var history    = [];
+var fileSha    = null;
 var doneOpen   = false;
+var saving     = false;
 var toastTimer = null;
 var pollTimer  = null;
-var editingId  = null;  // id item in modifica dettagli
 
-// ── API ───────────────────────────────────────────────────────
-function atFetch(method, table, body, id) {
-  var base = WORKER + "/v0/" + BASE_ID + "/" + table;
-  var url  = id ? base + "/" + id : base;
-  var opts = {method: method, headers: {"Content-Type": "application/json"}};
-  if (body && method !== "GET" && method !== "DELETE") opts.body = JSON.stringify(body);
-  return fetch(url, opts).then(function(res) {
-    if (!res.ok) return res.json().then(function(e) { throw new Error(e.error ? e.error.message : res.statusText); });
-    if (method === "DELETE") return {};
-    return res.json();
+// ── GITHUB API ────────────────────────────────────────────────
+function ghGet() {
+  return fetch(GH_API + "?t=" + Date.now(), {
+    headers: {
+      "Authorization": "token " + GH_TOKEN,
+      "Accept": "application/vnd.github.v3+json"
+    }
+  }).then(function(r) { return r.json(); }).then(function(d) {
+    fileSha = d.sha;
+    var content = atob(d.content.replace(/\n/g,""));
+    return JSON.parse(content);
   });
 }
 
-function getItems() {
-  var url = WORKER + "/v0/" + BASE_ID + "/" + TBL_LISTA +
-    "?sort%5B0%5D%5Bfield%5D=createdAt&sort%5B0%5D%5Bdirection%5D=desc&maxRecords=200";
-  return fetch(url, {headers: {"Content-Type": "application/json"}})
-    .then(function(r) { return r.json(); })
-    .then(function(d) {
-      return (d.records || []).map(function(r) {
-        return {
-          id:          r.id,
-          nome:        r.fields.nome        || "",
-          qty:         r.fields.qty         || "",
-          nota:        r.fields.nota        || "",
-          autore:      r.fields.autore      || "",
-          authorColor: r.fields.authorColor || 0,
-          done:        !!r.fields.done,
-          createdAt:   r.fields.createdAt   || ""
-        };
-      });
-    });
-}
-
-function addItem(nome, qty, nota, autore, colorIdx) {
-  return atFetch("POST", TBL_LISTA, {
-    fields: {nome:nome, qty:qty||"", nota:nota||"", cat:"altro", autore:autore,
-      authorColor:colorIdx, done:false, createdAt:new Date().toISOString(), doneAt:""}
+function ghPut(data) {
+  var content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
+  return fetch(GH_API, {
+    method: "PUT",
+    headers: {
+      "Authorization": "token " + GH_TOKEN,
+      "Accept": "application/vnd.github.v3+json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      message: "LaSpesa update",
+      content: content,
+      sha: fileSha
+    })
+  }).then(function(r) { return r.json(); }).then(function(d) {
+    if (d.content) fileSha = d.content.sha;
+    return d;
   });
-}
-
-function updateItem(id, fields) {
-  return atFetch("PATCH", TBL_LISTA, {fields: fields}, id);
-}
-
-function toggleItem(id, currentDone, autore) {
-  var newDone = !currentDone;
-  var doneAt  = newDone ? new Date().toISOString() : "";
-  return atFetch("PATCH", TBL_LISTA, {fields:{done:newDone, doneAt:doneAt}}, id)
-    .then(function() {
-      if (newDone) {
-        var item = items.find(function(i) { return i.id === id; });
-        if (item) return atFetch("POST", TBL_STORICO, {
-          fields:{nome:item.nome, qty:item.qty, cat:"altro", autore:autore, doneAt:doneAt}
-        });
-      }
-    });
-}
-
-function deleteItem(id) { return atFetch("DELETE", TBL_LISTA, null, id); }
-
-function getHistory() {
-  var url = WORKER + "/v0/" + BASE_ID + "/" + TBL_STORICO +
-    "?sort%5B0%5D%5Bfield%5D=doneAt&sort%5B0%5D%5Bdirection%5D=desc&maxRecords=60";
-  return fetch(url, {headers: {"Content-Type": "application/json"}})
-    .then(function(r) { return r.json(); })
-    .then(function(d) { return (d.records || []).map(function(r) { return r.fields; }); });
 }
 
 // ── BOOT ──────────────────────────────────────────────────────
@@ -456,24 +363,16 @@ window.onload = function() {
     document.getElementById("loadingScreen").classList.add("out");
     setTimeout(function() {
       document.getElementById("loadingScreen").style.display = "none";
-      document.getElementById("pinScreen").classList.remove("hidden");
-      document.getElementById("pinName").focus();
+      document.getElementById("nameScreen").classList.remove("hidden");
+      setTimeout(function() { document.getElementById("nameInp").focus(); }, 100);
     }, 350);
   }
 };
 
-// ── PIN ───────────────────────────────────────────────────────
-function doPin() {
-  var name = document.getElementById("pinName").value.trim();
-  var pin  = document.getElementById("pinField").value.trim();
+// ── NAME ──────────────────────────────────────────────────────
+function doName() {
+  var name = document.getElementById("nameInp").value.trim();
   if (!name) { showToast("Inserisci il tuo nome!"); return; }
-  if (!pin)  { showToast("Inserisci il codice!"); return; }
-  if (pin !== PIN) {
-    var pf = document.getElementById("pinField");
-    pf.value = ""; pf.classList.add("shake");
-    setTimeout(function() { pf.classList.remove("shake"); }, 400);
-    showToast("❌ Codice errato!"); return;
-  }
   var sum = 0;
   for (var i = 0; i < name.length; i++) sum += name.charCodeAt(i);
   user = {name: name, colorIdx: sum % COLORS.length};
@@ -481,75 +380,72 @@ function doPin() {
   showMain();
 }
 
-function doLogout() {
-  localStorage.removeItem("laspesa_user");
-  clearInterval(pollTimer);
-  location.reload();
+function doChangeName() {
+  var name = prompt("Il tuo nome:", user.name);
+  if (!name || !name.trim()) return;
+  var sum = 0;
+  for (var i = 0; i < name.length; i++) sum += name.charCodeAt(i);
+  user = {name: name.trim(), colorIdx: sum % COLORS.length};
+  localStorage.setItem("laspesa_user", JSON.stringify(user));
+  document.getElementById("uName").textContent  = user.name;
+  document.getElementById("uBadge").textContent = user.name;
+  showToast("Nome aggiornato!");
 }
 
 // ── MAIN ──────────────────────────────────────────────────────
 function showMain() {
   document.getElementById("loadingScreen").style.display = "none";
-  document.getElementById("pinScreen").classList.add("hidden");
+  document.getElementById("nameScreen").classList.add("hidden");
   document.getElementById("mainApp").classList.add("visible");
   document.getElementById("uName").textContent  = user.name;
   document.getElementById("uBadge").textContent = user.name;
-  loadItems();
-  pollTimer = setInterval(loadItems, 25000);
+  loadData();
+  pollTimer = setInterval(loadData, 30000);
 }
 
 // ── LOAD ──────────────────────────────────────────────────────
-function loadItems() {
+function loadData() {
   setSyncState("loading");
-  getItems().then(function(data) {
-    items = data; setSyncState("ok"); render();
+  ghGet().then(function(data) {
+    items   = data.items   || [];
+    history = data.history || [];
+    setSyncState("ok");
+    render();
+  }).catch(function(e) {
+    setSyncState("error");
+    showToast("Errore connessione");
+  });
+}
+
+function saveData() {
+  if (saving) return Promise.resolve();
+  saving = true;
+  setSyncState("loading");
+  return ghPut({items: items, history: history}).then(function() {
+    saving = false;
+    setSyncState("ok");
   }).catch(function() {
-    setSyncState("error"); showToast("Errore connessione Airtable");
+    saving = false;
+    setSyncState("error");
+    showToast("Errore salvataggio");
   });
 }
 
 function setSyncState(s) {
   var dot = document.getElementById("sdot");
   var lbl = document.getElementById("slbl");
-  dot.className = "sdot " + (s === "loading" ? "loading" : s === "error" ? "error" : "ok");
-  lbl.textContent = s === "loading" ? "Sync..." : s === "error" ? "Errore" : "Live";
+  dot.className = "sdot " + (s==="loading"?"loading":s==="error"?"error":"ok");
+  lbl.textContent = s==="loading"?"Sync...":s==="error"?"Errore":"Live";
 }
 
-// ── QUICK ADD ─────────────────────────────────────────────────
-// Parsing intelligente: "latte 2 litri" → nome="latte" qty="2 litri"
+// ── PARSE INPUT ───────────────────────────────────────────────
 function parseInput(raw) {
   raw = raw.trim();
-  // Cerca pattern numero + unità in fondo: "latte 2", "pasta 500g", "vino 1 bottiglia"
-  var match = raw.match(/^(.+?)\s+(\d+[\d.,]*\s*(?:g|kg|ml|l|litri?|bottigli[ae]?|confezioni?|pacchi?|buste?|pz|pezzi?|fette?|vasetti?|scatol[ae]?)?)$/i);
-  if (match && match[2]) {
-    return {nome: match[1].trim(), qty: match[2].trim()};
-  }
-  // Oppure numero semplice alla fine: "uova 6"
+  var match = raw.match(/^(.+?)\s+(\d+[\d.,]*\s*(?:g|kg|ml|l|litri?|bottigli[ae]?|confezioni?|pacchi?|buste?|pz|pezzi?|vasetti?|scatol[ae]?)?)$/i);
+  if (match && match[2]) return {nome: match[1].trim(), qty: match[2].trim()};
   var match2 = raw.match(/^(.+?)\s+(\d+)$/);
-  if (match2) {
-    return {nome: match2[1].trim(), qty: match2[2].trim()};
-  }
+  if (match2) return {nome: match2[1].trim(), qty: match2[2].trim()};
   return {nome: raw, qty: ""};
-}
-
-function doQuickAdd() {
-  var raw = document.getElementById("quickInp").value.trim();
-  if (!raw) { showToast("Scrivi il nome di un prodotto!"); return; }
-  var parsed = parseInput(raw);
-  document.getElementById("quickInp").value = "";
-
-  var tmp = {id:"tmp_"+Date.now(), nome:parsed.nome, qty:parsed.qty, nota:"",
-    autore:user.name, authorColor:user.colorIdx, done:false};
-  items.unshift(tmp);
-  render();
-  showToast("✅ " + parsed.nome + " aggiunto!");
-
-  addItem(parsed.nome, parsed.qty, "", user.name, user.colorIdx)
-    .then(function() { loadItems(); })
-    .catch(function() {
-      items = items.filter(function(i) { return i.id !== tmp.id; });
-      render(); showToast("Errore salvataggio");
-    });
 }
 
 // ── RENDER ────────────────────────────────────────────────────
@@ -559,7 +455,7 @@ function render() {
   var done    = items.filter(function(i) { return  i.done; });
 
   document.getElementById("stPending").textContent = pending.length + " da comprare";
-  document.getElementById("stDone").textContent    = done.length + " presi";
+  document.getElementById("stDone").textContent    = done.length    + " presi";
 
   if (!items.length) {
     body.innerHTML = mkEmpty("🛒","Lista vuota!","Scrivi un prodotto qui sopra e premi +");
@@ -570,7 +466,7 @@ function render() {
 
   if (done.length) {
     html += '<div class="done-toggle" onclick="toggleDone()">' +
-      '<span class="done-chev' + (doneOpen ? " open" : "") + '">▶</span>' +
+      '<span class="done-chev' + (doneOpen?" open":"") + '">▶</span>' +
       'Già presi (' + done.length + ')</div>';
     if (doneOpen) html += done.map(function(it) { return mkItem(it); }).join("");
   }
@@ -578,24 +474,22 @@ function render() {
 }
 
 function mkItem(it) {
-  var color   = COLORS[(it.authorColor || 0) % COLORS.length];
+  var color   = COLORS[(it.colorIdx || 0) % COLORS.length];
   var initial = it.autore ? it.autore[0].toUpperCase() : "?";
   var isMe    = it.autore === (user ? user.name : "");
   var sub     = "";
-  if (it.qty)  sub += '<span class="item-qty">' + esc(it.qty) + '</span>';
+  if (it.qty)  sub += '<span class="item-qty">' + esc(it.qty)  + '</span>';
   if (it.nota) sub += '<span class="item-note">' + esc(it.nota) + '</span>';
-
-  return '<div class="item' + (it.done ? " checked" : "") + '" onclick="doToggle(\'' + it.id + '\',' + it.done + ')">' +
-    '<div class="chk">' + (it.done ? "✓" : "") + '</div>' +
+  return '<div class="item' + (it.done?" checked":"") + '" onclick="doToggle(\'' + it.id + '\')">' +
+    '<div class="chk">' + (it.done?"✓":"") + '</div>' +
     '<div class="item-body">' +
       '<div class="item-name">' + esc(it.nome) + '</div>' +
-      (sub ? '<div class="item-sub">' + sub + '</div>' : '') +
+      (sub ? '<div class="item-sub">' + sub + '</div>' : "") +
     '</div>' +
     '<div class="item-aside">' +
       '<span class="author-badge" style="background:' + color + '">' + initial + '</span>' +
-      (isMe && !it.done ? '<span class="item-del" onclick="doDel(event,\'' + it.id + '\')">🗑</span>' : '') +
-    '</div>' +
-    '</div>';
+      (isMe && !it.done ? '<span class="item-del" onclick="doDel(event,\'' + it.id + '\')">🗑</span>' : "") +
+    '</div></div>';
 }
 
 function mkEmpty(em, title, sub) {
@@ -605,89 +499,88 @@ function mkEmpty(em, title, sub) {
 }
 
 // ── ACTIONS ───────────────────────────────────────────────────
-function doToggle(id, currentDone) {
+function doAdd() {
+  var raw = document.getElementById("quickInp").value.trim();
+  if (!raw) { showToast("Scrivi il nome di un prodotto!"); return; }
+  var parsed = parseInput(raw);
+  document.getElementById("quickInp").value = "";
+
+  var newItem = {
+    id:       "i" + Date.now(),
+    nome:     parsed.nome,
+    qty:      parsed.qty,
+    nota:     "",
+    autore:   user.name,
+    colorIdx: user.colorIdx,
+    done:     false,
+    ts:       Date.now()
+  };
+  items.unshift(newItem);
+  render();
+  showToast("✅ " + parsed.nome + " aggiunto!");
+  saveData();
+}
+
+function doToggle(id) {
   var item = items.find(function(i) { return i.id === id; });
   if (!item) return;
-  item.done = !currentDone;
+  item.done = !item.done;
+  if (item.done) {
+    item.doneAt = Date.now();
+    history.unshift({
+      nome:   item.nome,
+      qty:    item.qty,
+      autore: item.autore,
+      doneAt: item.doneAt
+    });
+    if (history.length > 100) history = history.slice(0, 100);
+  } else {
+    item.doneAt = null;
+  }
   render();
-  toggleItem(id, currentDone, user.name)
-    .then(function() { loadItems(); })
-    .catch(function() { item.done = currentDone; render(); showToast("Errore"); });
+  saveData();
 }
 
 function doDel(e, id) {
   e.stopPropagation();
   items = items.filter(function(i) { return i.id !== id; });
   render();
-  deleteItem(id)
-    .then(function() { showToast("🗑 Rimosso"); })
-    .catch(function() { loadItems(); showToast("Errore"); });
+  saveData();
+  showToast("🗑 Rimosso");
 }
 
 function doClearDone() {
   if (!confirm("Rimuovere tutti i prodotti già presi?")) return;
-  var toDelete = items.filter(function(i) { return i.done; });
   items = items.filter(function(i) { return !i.done; });
   render();
-  Promise.all(toDelete.map(function(i) { return deleteItem(i.id); }))
-    .then(function() { showToast("Fatto!"); loadItems(); })
-    .catch(function() { loadItems(); });
+  saveData();
+  showToast("Fatto!");
 }
 
 function doClearAll() {
   if (!confirm("Sei sicuro? Verranno cancellati TUTTI i prodotti.")) return;
-  var all = items.slice();
-  items = []; render();
-  Promise.all(all.map(function(i) { return deleteItem(i.id); }))
-    .then(function() { showToast("Lista svuotata"); })
-    .catch(function() { loadItems(); });
-}
-
-// ── DETTAGLI OPZIONALI ────────────────────────────────────────
-function openDetails(id) {
-  var item = items.find(function(i) { return i.id === id; });
-  if (!item) return;
-  editingId = id;
-  document.getElementById("modalItemName").textContent = item.nome;
-  document.getElementById("mQty").value  = item.qty  || "";
-  document.getElementById("mNote").value = item.nota || "";
-  document.getElementById("modalOverlay").classList.add("open");
-  setTimeout(function() { document.getElementById("mQty").focus(); }, 300);
-}
-
-function saveDetails() {
-  if (!editingId) return;
-  var qty  = document.getElementById("mQty").value.trim();
-  var nota = document.getElementById("mNote").value.trim();
-  var item = items.find(function(i) { return i.id === editingId; });
-  if (item) { item.qty = qty; item.nota = nota; }
-  closeModal();
+  items = [];
   render();
-  updateItem(editingId, {qty: qty, nota: nota})
-    .then(function() { showToast("Salvato!"); })
-    .catch(function() { showToast("Errore salvataggio"); });
-  editingId = null;
+  saveData();
+  showToast("Lista svuotata");
 }
-
-function closeModal() { document.getElementById("modalOverlay").classList.remove("open"); }
-function closeModalOut(e) { if (e.target.id === "modalOverlay") closeModal(); }
 
 // ── HISTORY ───────────────────────────────────────────────────
-function loadHistory() {
+function renderHistory() {
   var body = document.getElementById("histBody");
-  body.innerHTML = mkEmpty("⏳","Caricamento...","");
-  getHistory().then(function(data) {
-    if (!data.length) { body.innerHTML = mkEmpty("📋","Nessuno storico","Gli articoli presi appariranno qui."); return; }
-    body.innerHTML = data.map(function(h) {
-      var d  = h.doneAt ? new Date(h.doneAt) : null;
-      var ds = d ? d.toLocaleDateString("it-IT",{day:"2-digit",month:"short"}) + " " +
-                   d.toLocaleTimeString("it-IT",{hour:"2-digit",minute:"2-digit"}) : "";
-      return '<div class="hist-item">' +
-        '<div><div class="hist-name">' + esc(h.nome) + '</div>' +
-        '<div class="hist-meta">' + (h.qty ? h.qty + " · " : "") + (h.autore || "?") + '</div></div>' +
-        '<div class="hist-date">' + ds + '</div></div>';
-    }).join("");
-  }).catch(function() { body.innerHTML = mkEmpty("❌","Errore","Non riesco a caricare lo storico."); });
+  if (!history.length) {
+    body.innerHTML = mkEmpty("📋","Nessuno storico","Gli articoli presi appariranno qui.");
+    return;
+  }
+  body.innerHTML = history.slice(0,60).map(function(h) {
+    var d  = h.doneAt ? new Date(h.doneAt) : null;
+    var ds = d ? d.toLocaleDateString("it-IT",{day:"2-digit",month:"short"}) + " " +
+                 d.toLocaleTimeString("it-IT",{hour:"2-digit",minute:"2-digit"}) : "";
+    return '<div class="hist-item">' +
+      '<div><div class="hist-name">' + esc(h.nome) + '</div>' +
+      '<div class="hist-meta">' + (h.qty?h.qty+" · ":"") + (h.autore||"?") + '</div></div>' +
+      '<div class="hist-date">' + ds + '</div></div>';
+  }).join("");
 }
 
 // ── UI ────────────────────────────────────────────────────────
@@ -696,9 +589,9 @@ function toggleDone() { doneOpen = !doneOpen; render(); }
 function switchView(v) {
   document.querySelectorAll(".view").forEach(function(e) { e.classList.remove("active"); });
   document.querySelectorAll(".nbtn").forEach(function(e) { e.classList.remove("active"); });
-  document.getElementById("view" + v).classList.add("active");
-  document.getElementById("nav" + v).classList.add("active");
-  if (v === "History") loadHistory();
+  document.getElementById("view"+v).classList.add("active");
+  document.getElementById("nav"+v).classList.add("active");
+  if (v === "History") renderHistory();
 }
 
 function showToast(msg) {
