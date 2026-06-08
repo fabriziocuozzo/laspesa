@@ -47,14 +47,11 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);
 #nameScreen.hidden{display:none;}
 .name-card{background:var(--surface);border-radius:24px;padding:32px 28px;width:100%;
   max-width:380px;box-shadow:var(--shadow-lg);border:1.5px solid var(--border);}
-.name-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:36px;color:var(--ink);
-  text-align:center;margin-bottom:4px;}
+.name-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:36px;color:var(--ink);text-align:center;margin-bottom:4px;}
 .name-logo span{color:var(--accent);}
 .name-icon{text-align:center;font-size:32px;margin-bottom:8px;}
-.name-tagline{color:var(--ink2);font-size:14px;font-weight:600;text-align:center;
-  margin-bottom:28px;line-height:1.6;}
-.flbl{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;
-  color:var(--ink2);margin-bottom:6px;display:block;}
+.name-tagline{color:var(--ink2);font-size:14px;font-weight:600;text-align:center;margin-bottom:28px;line-height:1.6;}
+.flbl{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--ink2);margin-bottom:6px;display:block;}
 .finp{width:100%;background:var(--bg);border:2px solid var(--border);border-radius:var(--r-sm);
   padding:14px 16px;font-family:'Nunito',sans-serif;font-size:16px;font-weight:700;
   color:var(--ink);outline:none;transition:border-color .2s;margin-bottom:20px;}
@@ -64,8 +61,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);
   color:white;font-family:'Nunito',sans-serif;font-size:16px;font-weight:800;cursor:pointer;
   box-shadow:0 4px 16px rgba(201,74,12,.32);transition:opacity .15s,transform .1s;}
 .name-btn:active{opacity:.85;transform:scale(.98);}
-.name-hint{color:var(--ink3);font-size:12px;font-weight:600;text-align:center;
-  margin-top:14px;line-height:1.6;}
+.name-hint{color:var(--ink3);font-size:12px;font-weight:600;text-align:center;margin-top:14px;line-height:1.6;}
 
 /* MAIN */
 #mainApp{display:none;flex-direction:column;flex:1;min-height:100dvh;}
@@ -75,8 +71,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);
 .header{padding:14px 18px 12px;background:var(--surface);border-bottom:1.5px solid var(--border);
   position:sticky;top:0;z-index:10;box-shadow:var(--shadow-sm);}
 .header-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
-.h-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:24px;color:var(--ink);
-  display:flex;align-items:center;gap:7px;}
+.h-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:24px;color:var(--ink);display:flex;align-items:center;gap:7px;}
 .h-logo span{color:var(--accent);}
 .sync-btn{display:flex;align-items:center;gap:6px;background:var(--surface2);
   border:1.5px solid var(--border);border-radius:20px;padding:5px 12px;
@@ -103,8 +98,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);
 .add-inp::placeholder{color:var(--ink3);font-weight:500;}
 .add-fab{width:46px;height:46px;border-radius:var(--r-sm);background:var(--accent);border:none;
   cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:28px;
-  color:white;flex-shrink:0;box-shadow:0 3px 10px rgba(201,74,12,.3);
-  transition:transform .12s,opacity .12s;}
+  color:white;flex-shrink:0;box-shadow:0 3px 10px rgba(201,74,12,.3);transition:transform .12s,opacity .12s;}
 .add-fab:active{transform:scale(.88);opacity:.85;}
 .add-hint{font-size:11px;color:var(--ink3);font-weight:600;margin-top:7px;padding:0 2px;}
 
@@ -173,8 +167,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);
 .user-badge{display:inline-block;background:var(--accent);color:white;border-radius:20px;
   padding:5px 18px;font-size:13px;font-weight:800;box-shadow:0 2px 10px rgba(201,74,12,.3);}
 .sg{margin-bottom:16px;}
-.sg-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;
-  color:var(--ink2);margin-bottom:8px;padding:0 4px;}
+.sg-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--ink2);margin-bottom:8px;padding:0 4px;}
 .srow{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r-sm);
   padding:14px 16px;margin-bottom:6px;display:flex;justify-content:space-between;
   align-items:center;cursor:pointer;box-shadow:var(--shadow-sm);transition:background .1s;}
@@ -208,7 +201,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);
     <input class="finp" id="nameInp" placeholder="es. Fabrizio" maxlength="18"
       autocomplete="off" onkeydown="if(event.key==='Enter')doName()">
     <button class="name-btn" onclick="doName()">Entra 🛒</button>
-    <div class="name-hint">Il nome appare su ogni prodotto che aggiungi<br>così tutti sanno chi ha messo cosa</div>
+    <div class="name-hint">Il nome appare su ogni prodotto che aggiungi</div>
   </div>
 </div>
 
@@ -216,7 +209,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);
   <div class="header">
     <div class="header-top">
       <div class="h-logo"><span>🛒</span>La<span>Spesa</span></div>
-      <div class="sync-btn" onclick="loadData()">
+      <div class="sync-btn" onclick="loadItems()">
         <div class="sdot loading" id="sdot"></div>
         <span id="slbl">Sync...</span>
       </div>
@@ -255,8 +248,8 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);
       </div>
       <div class="sg">
         <div class="sg-label">Lista</div>
-        <div class="srow" onclick="loadData();showToast('Aggiornamento...')">
-          <div><div class="srow-lbl">Aggiorna lista</div><div class="srow-sub">Ricarica i dati</div></div>
+        <div class="srow" onclick="loadItems();showToast('Aggiornamento...')">
+          <div><div class="srow-lbl">Aggiorna lista</div><div class="srow-sub">Ricarica i dati da Airtable</div></div>
           <div class="srow-ico">🔄</div>
         </div>
         <div class="srow" onclick="doClearDone()">
@@ -278,7 +271,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);
       <div class="sg">
         <div class="sg-label">Info</div>
         <div class="srow" style="cursor:default">
-          <div><div class="srow-lbl">LaSpesa v3.0</div><div class="srow-sub">Powered by GitHub</div></div>
+          <div><div class="srow-lbl">LaSpesa v4.0</div><div class="srow-sub">Powered by Airtable · GitHub Pages</div></div>
           <div class="srow-ico">❤️</div>
         </div>
       </div>
@@ -302,55 +295,54 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);
 
 <script>
 // ── CONFIG ────────────────────────────────────────────────────
-// Token diviso in due parti per evitare blocco GitHub secret scanning
-var GH_TOKEN   = "ghp_4ZTQx9BpBFi" + "5RqWJ5Uuqxb0sqpGRS507qXwD";
-var GH_REPO    = "fabriziocuozzo/laspesa";
-var GH_FILE    = "data.json";
-var GH_API     = "https://api.github.com/repos/" + GH_REPO + "/contents/" + GH_FILE;
-var COLORS     = ["#C94A0C","#B45309","#1A6B40","#1D4ED8","#7C3AED","#B91C1C"];
+var AT_TOKEN    = "patnaSIB6mZ28y1QZ." + "075ec69331485aec61caf6863657e4338d0fc69a2bd3e80f4db822a9c92c9aad";
+var AT_BASE     = "appwd5hSBNKVupHQY";
+var AT_LISTA    = "tblJrYkIo2s7XuElK";
+var AT_STORICO  = "tblpdd0NZoD2p0RwB";
+var AT_URL      = "https://api.airtable.com/v0/" + AT_BASE;
+var COLORS      = ["#C94A0C","#B45309","#1A6B40","#1D4ED8","#7C3AED","#B91C1C"];
 
-// ── STATO ─────────────────────────────────────────────────────
 var user       = null;
 var items      = [];
-var history    = [];
-var fileSha    = null;
 var doneOpen   = false;
-var saving     = false;
 var toastTimer = null;
 var pollTimer  = null;
 
-// ── GITHUB API ────────────────────────────────────────────────
-function ghGet() {
-  return fetch(GH_API + "?t=" + Date.now(), {
-    headers: {
-      "Authorization": "token " + GH_TOKEN,
-      "Accept": "application/vnd.github.v3+json"
-    }
-  }).then(function(r) { return r.json(); }).then(function(d) {
-    fileSha = d.sha;
-    var content = atob(d.content.replace(/\n/g,""));
-    return JSON.parse(content);
-  });
+// ── AIRTABLE API ──────────────────────────────────────────────
+function atHeaders() {
+  return {
+    "Authorization": "Bearer " + AT_TOKEN,
+    "Content-Type": "application/json"
+  };
 }
 
-function ghPut(data) {
-  var content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
-  return fetch(GH_API, {
-    method: "PUT",
-    headers: {
-      "Authorization": "token " + GH_TOKEN,
-      "Accept": "application/vnd.github.v3+json",
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      message: "LaSpesa update",
-      content: content,
-      sha: fileSha
-    })
-  }).then(function(r) { return r.json(); }).then(function(d) {
-    if (d.content) fileSha = d.content.sha;
-    return d;
-  });
+function atGet(table, params) {
+  var url = AT_URL + "/" + table + (params ? "?" + params : "");
+  return fetch(url, {headers: atHeaders()})
+    .then(function(r) { return r.json(); });
+}
+
+function atPost(table, fields) {
+  return fetch(AT_URL + "/" + table, {
+    method: "POST",
+    headers: atHeaders(),
+    body: JSON.stringify({fields: fields})
+  }).then(function(r) { return r.json(); });
+}
+
+function atPatch(table, id, fields) {
+  return fetch(AT_URL + "/" + table + "/" + id, {
+    method: "PATCH",
+    headers: atHeaders(),
+    body: JSON.stringify({fields: fields})
+  }).then(function(r) { return r.json(); });
+}
+
+function atDelete(table, id) {
+  return fetch(AT_URL + "/" + table + "/" + id, {
+    method: "DELETE",
+    headers: atHeaders()
+  }).then(function(r) { return r.json(); });
 }
 
 // ── BOOT ──────────────────────────────────────────────────────
@@ -383,9 +375,10 @@ function doName() {
 function doChangeName() {
   var name = prompt("Il tuo nome:", user.name);
   if (!name || !name.trim()) return;
+  name = name.trim();
   var sum = 0;
   for (var i = 0; i < name.length; i++) sum += name.charCodeAt(i);
-  user = {name: name.trim(), colorIdx: sum % COLORS.length};
+  user = {name: name, colorIdx: sum % COLORS.length};
   localStorage.setItem("laspesa_user", JSON.stringify(user));
   document.getElementById("uName").textContent  = user.name;
   document.getElementById("uBadge").textContent = user.name;
@@ -399,35 +392,33 @@ function showMain() {
   document.getElementById("mainApp").classList.add("visible");
   document.getElementById("uName").textContent  = user.name;
   document.getElementById("uBadge").textContent = user.name;
-  loadData();
-  pollTimer = setInterval(loadData, 30000);
+  loadItems();
+  pollTimer = setInterval(loadItems, 20000);
 }
 
 // ── LOAD ──────────────────────────────────────────────────────
-function loadData() {
+function loadItems() {
   setSyncState("loading");
-  ghGet().then(function(data) {
-    items   = data.items   || [];
-    history = data.history || [];
+  var params = "sort%5B0%5D%5Bfield%5D=createdAt&sort%5B0%5D%5Bdirection%5D=desc&maxRecords=200";
+  atGet(AT_LISTA, params).then(function(data) {
+    if (data.error) throw new Error(data.error.message);
+    items = (data.records || []).map(function(r) {
+      return {
+        id:         r.id,
+        nome:       r.fields.nome        || "",
+        qty:        r.fields.qty         || "",
+        nota:       r.fields.nota        || "",
+        autore:     r.fields.autore      || "",
+        colorIdx:   r.fields.authorColor || 0,
+        done:       !!r.fields.done,
+        createdAt:  r.fields.createdAt   || ""
+      };
+    });
     setSyncState("ok");
     render();
   }).catch(function(e) {
     setSyncState("error");
     showToast("Errore connessione");
-  });
-}
-
-function saveData() {
-  if (saving) return Promise.resolve();
-  saving = true;
-  setSyncState("loading");
-  return ghPut({items: items, history: history}).then(function() {
-    saving = false;
-    setSyncState("ok");
-  }).catch(function() {
-    saving = false;
-    setSyncState("error");
-    showToast("Errore salvataggio");
   });
 }
 
@@ -441,10 +432,10 @@ function setSyncState(s) {
 // ── PARSE INPUT ───────────────────────────────────────────────
 function parseInput(raw) {
   raw = raw.trim();
-  var match = raw.match(/^(.+?)\s+(\d+[\d.,]*\s*(?:g|kg|ml|l|litri?|bottigli[ae]?|confezioni?|pacchi?|buste?|pz|pezzi?|vasetti?|scatol[ae]?)?)$/i);
-  if (match && match[2]) return {nome: match[1].trim(), qty: match[2].trim()};
-  var match2 = raw.match(/^(.+?)\s+(\d+)$/);
-  if (match2) return {nome: match2[1].trim(), qty: match2[2].trim()};
+  var m1 = raw.match(/^(.+?)\s+(\d+[\d.,]*\s*(?:g|kg|ml|l|litri?|bottigli[ae]?|confezioni?|pacchi?|buste?|pz|pezzi?|vasetti?|scatol[ae]?)?)$/i);
+  if (m1 && m1[2]) return {nome: m1[1].trim(), qty: m1[2].trim()};
+  var m2 = raw.match(/^(.+?)\s+(\d+)$/);
+  if (m2) return {nome: m2[1].trim(), qty: m2[2].trim()};
   return {nome: raw, qty: ""};
 }
 
@@ -478,9 +469,9 @@ function mkItem(it) {
   var initial = it.autore ? it.autore[0].toUpperCase() : "?";
   var isMe    = it.autore === (user ? user.name : "");
   var sub     = "";
-  if (it.qty)  sub += '<span class="item-qty">' + esc(it.qty)  + '</span>';
+  if (it.qty)  sub += '<span class="item-qty">'  + esc(it.qty)  + '</span>';
   if (it.nota) sub += '<span class="item-note">' + esc(it.nota) + '</span>';
-  return '<div class="item' + (it.done?" checked":"") + '" onclick="doToggle(\'' + it.id + '\')">' +
+  return '<div class="item' + (it.done?" checked":"") + '" onclick="doToggle(\'' + it.id + '\',' + it.done + ')">' +
     '<div class="chk">' + (it.done?"✓":"") + '</div>' +
     '<div class="item-body">' +
       '<div class="item-name">' + esc(it.nome) + '</div>' +
@@ -502,57 +493,54 @@ function mkEmpty(em, title, sub) {
 function doAdd() {
   var raw = document.getElementById("quickInp").value.trim();
   if (!raw) { showToast("Scrivi il nome di un prodotto!"); return; }
-  var parsed = parseInput(raw);
+  var p = parseInput(raw);
   document.getElementById("quickInp").value = "";
 
-  var newItem = {
-    id:       "i" + Date.now(),
-    nome:     parsed.nome,
-    qty:      parsed.qty,
-    nota:     "",
-    autore:   user.name,
-    colorIdx: user.colorIdx,
-    done:     false,
-    ts:       Date.now()
-  };
-  items.unshift(newItem);
+  // Ottimistico
+  var tmp = {id:"tmp_"+Date.now(), nome:p.nome, qty:p.qty, nota:"",
+    autore:user.name, colorIdx:user.colorIdx, done:false};
+  items.unshift(tmp);
   render();
-  showToast("✅ " + parsed.nome + " aggiunto!");
-  ghPut({items: items, history: history}).then(function(d) {
-    if (d.content) fileSha = d.content.sha;
-    setSyncState("ok");
+  showToast("✅ " + p.nome + " aggiunto!");
+
+  atPost(AT_LISTA, {
+    nome: p.nome, qty: p.qty, nota: "", cat: "altro",
+    autore: user.name, authorColor: user.colorIdx,
+    done: false, createdAt: new Date().toISOString(), doneAt: ""
+  }).then(function() {
+    loadItems();
   }).catch(function() {
-    setSyncState("error");
+    items = items.filter(function(i) { return i.id !== tmp.id; });
+    render();
     showToast("Errore salvataggio");
   });
 }
 
-function doToggle(id) {
+function doToggle(id, currentDone) {
   var item = items.find(function(i) { return i.id === id; });
   if (!item) return;
-  item.done = !item.done;
-  if (item.done) {
-    item.doneAt = Date.now();
-    history.unshift({
-      nome:   item.nome,
-      qty:    item.qty,
-      autore: item.autore,
-      doneAt: item.doneAt
-    });
-    if (history.length > 100) history = history.slice(0, 100);
-    showToast("✅ Preso!");
-  } else {
-    item.doneAt = null;
-    showToast("↩️ Rimesso in lista");
-  }
+  // Aggiorna localmente subito
+  item.done = !currentDone;
   render();
-  // Salva in background senza ricaricare — evita sovrascrittura da cache GitHub
-  ghPut({items: items, history: history}).then(function(d) {
-    if (d.content) fileSha = d.content.sha;
-    setSyncState("ok");
+  showToast(item.done ? "✅ Preso!" : "↩️ Rimesso in lista");
+
+  var newDone = !currentDone;
+  var doneAt  = newDone ? new Date().toISOString() : "";
+
+  atPatch(AT_LISTA, id, {done: newDone, doneAt: doneAt}).then(function(res) {
+    if (res.error) throw new Error(res.error.message);
+    // Salva nello storico se preso
+    if (newDone) {
+      atPost(AT_STORICO, {
+        nome: item.nome, qty: item.qty, cat: "altro",
+        autore: user.name, doneAt: doneAt
+      });
+    }
   }).catch(function() {
-    setSyncState("error");
-    showToast("Errore salvataggio");
+    // Rollback
+    item.done = currentDone;
+    render();
+    showToast("Errore aggiornamento");
   });
 }
 
@@ -561,47 +549,55 @@ function doDel(e, id) {
   items = items.filter(function(i) { return i.id !== id; });
   render();
   showToast("🗑 Rimosso");
-  ghPut({items: items, history: history}).then(function(d) {
-    if (d.content) fileSha = d.content.sha;
-    setSyncState("ok");
-  }).catch(function() {
-    setSyncState("error");
-    showToast("Errore salvataggio");
+  atDelete(AT_LISTA, id).catch(function() {
+    loadItems();
+    showToast("Errore eliminazione");
   });
 }
 
 function doClearDone() {
   if (!confirm("Rimuovere tutti i prodotti già presi?")) return;
+  var toDelete = items.filter(function(i) { return i.done; });
   items = items.filter(function(i) { return !i.done; });
   render();
-  saveData();
-  showToast("Fatto!");
+  Promise.all(toDelete.map(function(i) { return atDelete(AT_LISTA, i.id); }))
+    .then(function() { showToast("Fatto!"); })
+    .catch(function() { loadItems(); });
 }
 
 function doClearAll() {
   if (!confirm("Sei sicuro? Verranno cancellati TUTTI i prodotti.")) return;
-  items = [];
-  render();
-  saveData();
-  showToast("Lista svuotata");
+  var all = items.slice();
+  items = []; render();
+  Promise.all(all.map(function(i) { return atDelete(AT_LISTA, i.id); }))
+    .then(function() { showToast("Lista svuotata"); })
+    .catch(function() { loadItems(); });
 }
 
 // ── HISTORY ───────────────────────────────────────────────────
-function renderHistory() {
+function loadHistory() {
   var body = document.getElementById("histBody");
-  if (!history.length) {
-    body.innerHTML = mkEmpty("📋","Nessuno storico","Gli articoli presi appariranno qui.");
-    return;
-  }
-  body.innerHTML = history.slice(0,60).map(function(h) {
-    var d  = h.doneAt ? new Date(h.doneAt) : null;
-    var ds = d ? d.toLocaleDateString("it-IT",{day:"2-digit",month:"short"}) + " " +
-                 d.toLocaleTimeString("it-IT",{hour:"2-digit",minute:"2-digit"}) : "";
-    return '<div class="hist-item">' +
-      '<div><div class="hist-name">' + esc(h.nome) + '</div>' +
-      '<div class="hist-meta">' + (h.qty?h.qty+" · ":"") + (h.autore||"?") + '</div></div>' +
-      '<div class="hist-date">' + ds + '</div></div>';
-  }).join("");
+  body.innerHTML = mkEmpty("⏳","Caricamento...","");
+  var params = "sort%5B0%5D%5Bfield%5D=doneAt&sort%5B0%5D%5Bdirection%5D=desc&maxRecords=60";
+  atGet(AT_STORICO, params).then(function(data) {
+    var records = data.records || [];
+    if (!records.length) {
+      body.innerHTML = mkEmpty("📋","Nessuno storico","Gli articoli presi appariranno qui.");
+      return;
+    }
+    body.innerHTML = records.map(function(r) {
+      var h  = r.fields;
+      var d  = h.doneAt ? new Date(h.doneAt) : null;
+      var ds = d ? d.toLocaleDateString("it-IT",{day:"2-digit",month:"short"}) + " " +
+                   d.toLocaleTimeString("it-IT",{hour:"2-digit",minute:"2-digit"}) : "";
+      return '<div class="hist-item">' +
+        '<div><div class="hist-name">' + esc(h.nome||"") + '</div>' +
+        '<div class="hist-meta">' + (h.qty?h.qty+" · ":"") + (h.autore||"?") + '</div></div>' +
+        '<div class="hist-date">' + ds + '</div></div>';
+    }).join("");
+  }).catch(function() {
+    body.innerHTML = mkEmpty("❌","Errore","Non riesco a caricare lo storico.");
+  });
 }
 
 // ── UI ────────────────────────────────────────────────────────
@@ -612,7 +608,7 @@ function switchView(v) {
   document.querySelectorAll(".nbtn").forEach(function(e) { e.classList.remove("active"); });
   document.getElementById("view"+v).classList.add("active");
   document.getElementById("nav"+v).classList.add("active");
-  if (v === "History") renderHistory();
+  if (v === "History") loadHistory();
 }
 
 function showToast(msg) {
