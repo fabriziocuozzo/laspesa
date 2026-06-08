@@ -7,19 +7,9 @@
       "nota": "",
       "autore": "Fabrizio",
       "colorIdx": 0,
-      "done": false,
-      "ts": 1780950055834
-    },
-    {
-      "id": "i1780950035898",
-      "nome": "Pane",
-      "qty": "",
-      "nota": "",
-      "autore": "Fabrizio",
-      "colorIdx": 0,
-      "done": false,
-      "ts": 1780950035898,
-      "doneAt": null
+      "done": true,
+      "ts": 1780950055834,
+      "doneAt": 1780950411153
     }
   ],
   "history": {}
