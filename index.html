@@ -518,7 +518,13 @@ function doAdd() {
   items.unshift(newItem);
   render();
   showToast("✅ " + parsed.nome + " aggiunto!");
-  saveData();
+  ghPut({items: items, history: history}).then(function(d) {
+    if (d.content) fileSha = d.content.sha;
+    setSyncState("ok");
+  }).catch(function() {
+    setSyncState("error");
+    showToast("Errore salvataggio");
+  });
 }
 
 function doToggle(id) {
@@ -534,19 +540,34 @@ function doToggle(id) {
       doneAt: item.doneAt
     });
     if (history.length > 100) history = history.slice(0, 100);
+    showToast("✅ Preso!");
   } else {
     item.doneAt = null;
+    showToast("↩️ Rimesso in lista");
   }
   render();
-  saveData();
+  // Salva in background senza ricaricare — evita sovrascrittura da cache GitHub
+  ghPut({items: items, history: history}).then(function(d) {
+    if (d.content) fileSha = d.content.sha;
+    setSyncState("ok");
+  }).catch(function() {
+    setSyncState("error");
+    showToast("Errore salvataggio");
+  });
 }
 
 function doDel(e, id) {
   e.stopPropagation();
   items = items.filter(function(i) { return i.id !== id; });
   render();
-  saveData();
   showToast("🗑 Rimosso");
+  ghPut({items: items, history: history}).then(function(d) {
+    if (d.content) fileSha = d.content.sha;
+    setSyncState("ok");
+  }).catch(function() {
+    setSyncState("error");
+    showToast("Errore salvataggio");
+  });
 }
 
 function doClearDone() {
