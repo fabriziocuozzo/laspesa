@@ -18,7 +18,8 @@
       "autore": "Fabrizio",
       "colorIdx": 0,
       "done": false,
-      "ts": 1780950035898
+      "ts": 1780950035898,
+      "doneAt": null
     }
   ],
   "history": {}
