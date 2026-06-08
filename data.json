@@ -7,9 +7,9 @@
       "nota": "",
       "autore": "Fabrizio",
       "colorIdx": 0,
-      "done": true,
+      "done": false,
       "ts": 1780950055834,
-      "doneAt": 1780950411153
+      "doneAt": null
     }
   ],
   "history": {}
