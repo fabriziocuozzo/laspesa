@@ -12,15 +12,27 @@ export default {
     if (request.method === "OPTIONS") {
       return new Response(null, { status: 204, headers: CORS });
     }
+
     const url  = new URL(request.url);
     const path = url.pathname + url.search;
-    const res  = await fetch(AIRTABLE_BASE + path, {
+
+    let body = undefined;
+    if (!["GET","HEAD","DELETE"].includes(request.method)) {
+      body = await request.text();
+    }
+
+    const res = await fetch(AIRTABLE_BASE + path, {
       method:  request.method,
-      headers: { "Authorization": `Bearer ${AIRTABLE_TOKEN}`, "Content-Type": "application/json" },
-      body:    ["GET","HEAD","DELETE"].includes(request.method) ? undefined : request.body,
+      headers: {
+        "Authorization": `Bearer ${AIRTABLE_TOKEN}`,
+        "Content-Type":  "application/json",
+      },
+      body: body,
     });
-    return new Response(await res.text(), {
-      status: res.status,
+
+    const text = await res.text();
+    return new Response(text, {
+      status:  res.status,
       headers: { "Content-Type": "application/json", ...CORS }
     });
   }
