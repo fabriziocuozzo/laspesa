@@ -1,1 +1,15 @@
-{"items":[],"history":[]}
+{
+  "items": [
+    {
+      "id": "i1780949952861",
+      "nome": "Latte",
+      "qty": "",
+      "nota": "",
+      "autore": "Fabrizio",
+      "colorIdx": 0,
+      "done": false,
+      "ts": 1780949952861
+    }
+  ],
+  "history": {}
+}
